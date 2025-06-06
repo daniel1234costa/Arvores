@@ -121,7 +121,16 @@ node* removerNo(node* raiz, int valor) {
         }
        
     }
+void preordem (node* raiz){
+        if(raiz != NULL){
+        printf("%d ", raiz->dado);
+        preordem(raiz->esquerdo);
+          preordem(raiz->direito);
 
+
+        }
+       
+    }
 
 
 int main (){
@@ -136,7 +145,7 @@ int main (){
        raiz = inserir(raiz,25);
 
 
-ordem(raiz);
+preordem(raiz);
 
 
 
