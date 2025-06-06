@@ -190,6 +190,13 @@ int profundidadeNo(node* raiz, int valorBuscado) {
 }
    
 
+int somarValoresArvore(node* raiz) {
+    if (raiz == NULL) {
+        return 0;
+    } else {
+        return raiz->dado + somarValoresArvore(raiz->esquerdo) + somarValoresArvore(raiz->direito);
+    }
+}
 
 
 
@@ -203,15 +210,12 @@ int main (){
      raiz = inserir(raiz,40);
       raiz = inserir(raiz,15);
        raiz = inserir(raiz,25);
-        int no;
-     printf("Informe o nó que voce deseja saber sua profundidade\n");
-     scanf("%d", &no);
-int profun = profundidadeNo(raiz, no);
-    printf("O no %d tem profundidade %d \n", no, profun);
 
+          int soma = somarValoresArvore(raiz);
+       printf("a soma dos valores da arvore é = %d", soma);
+   
 
-
-
+        
 
 
     return 0;
