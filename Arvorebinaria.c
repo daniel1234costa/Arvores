@@ -1,248 +1,64 @@
-#include<stdio.h>
-#include<stdlib.h>
-typedef struct node {
-    int dado;
-   struct node * direito;
-    struct node * esquerdo;
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
+typedef struct Aluno {
+    char nome[50];
+    int matricula;
+    float nota;
+    struct Aluno *esquerdo;
+    struct Aluno *direito;
+} Aluno;
 
-} node;
-
-
- node *criarno( int valor){
-    node* novoN = (node*)malloc(sizeof(node));
-    if (novoN == NULL){
-        printf("falha na alocacao");
+Aluno* criarAluno(const char* nome, int matricula, float nota) {
+    Aluno* novoAluno = (Aluno*)malloc(sizeof(Aluno));
+    if (novoAluno == NULL) {
+        printf("Falha na alocacao de memoria para Aluno.\n");
         return NULL;
     }
-    novoN->dado = valor;
-    novoN->direito = NULL;
-    novoN->esquerdo = NULL;
-    return novoN;
-   
- }
- node* inserir(node* raiz, int valor) {
-    if (raiz == NULL) {
-        return criarno(valor);
-    }
-
-
-    if (valor < raiz->dado) {
-        raiz->esquerdo = inserir(raiz->esquerdo, valor);
-    } else if (valor > raiz->dado) {
-        raiz->direito = inserir(raiz->direito, valor);
-    } else {
-        printf("Valor %d ja existe na arvore. Nao sera inserido novamente.\n", valor);
-    }
-
-
-    return raiz;
-}
- node* encontrarMinimo(node* no) {
-    while (no != NULL && no->esquerdo != NULL) {
-        no = no->esquerdo;
-    }
-    return no;
+    strcpy(novoAluno->nome, nome);
+    novoAluno->matricula = matricula;
+    novoAluno->nota = nota;
+    novoAluno->esquerdo = NULL;
+    novoAluno->direito = NULL;
+    return novoAluno;
 }
 
-
-node* removerNo(node* raiz, int valor) {
-
-
+Aluno* inserirAluno(Aluno* raiz, const char* nome, int matricula, float nota) {
     if (raiz == NULL) {
-        return NULL;
+        return criarAluno(nome, matricula, nota);
     }
-
-
-
-
-    if (valor < raiz->dado) {
-       
-        raiz->esquerdo = removerNo(raiz->esquerdo, valor);
-    } else if (valor > raiz->dado) {
-   
-        raiz->direito = removerNo(raiz->direito, valor);
+    if (matricula < raiz->matricula) {
+        raiz->esquerdo = inserirAluno(raiz->esquerdo, nome, matricula, nota);
+    } else if (matricula > raiz->matricula) {
+        raiz->direito = inserirAluno(raiz->direito, nome, matricula, nota);
     } else {
-       
-        if (raiz->esquerdo == NULL && raiz->direito == NULL) {
-            free(raiz);
-            return NULL;
-        }
-        else if (raiz->esquerdo == NULL) {
-   
-            node* temp = raiz->direito;
-            free(raiz);                
-            return temp;                
-        } else if (raiz->direito == NULL) {
-
-
-            node* temp = raiz->esquerdo;
-            free(raiz);                
-            return temp;                
-        }
-
-
-        else {
-            node* sucessor = encontrarMinimo(raiz->direito);
-
-
-            raiz->dado = sucessor->dado;
-
-
-       
-            raiz->direito = removerNo(raiz->direito, sucessor->dado);
-        }
+        printf("Matricula %d (Aluno %s) ja existe na arvore. Nao sera inserido novamente.\n", matricula, nome);
     }
     return raiz;
 }
-    node* buscarno(node* raiz, int valor){
-
-
-        if(raiz == NULL){
-            return NULL;
-        }
-           else if(valor == raiz->dado){
-                return raiz;
-            }
-               else if(valor < raiz->dado){
-                    return buscarno(raiz->esquerdo, valor);
-                }
-                    else{
-                        return buscarno(raiz->direito, valor);
-                    }
-    }
-    void ordem(node* raiz){
-        if(raiz != NULL){
-        ordem(raiz->esquerdo);
-        printf("%d", raiz->dado);
-        ordem(raiz->direito);
-
-
-        }
-       
-    }
-void preordem (node* raiz){
-        if(raiz != NULL){
-        printf("%d ", raiz->dado);
-        preordem(raiz->esquerdo);
-          preordem(raiz->direito);
-
-
-        }
-       
-    }
-void posordem (node* raiz){
-        if(raiz != NULL){
-        posordem(raiz->esquerdo);
-          posordem(raiz->direito);
-           printf("%d ", raiz->dado);
-
-
-        }
-       
-    }
-    int altura(node* raiz){
-
-
-        if(raiz == NULL){
-            return -1;
-        }
-         else {
-        int alturaEsquerda = altura(raiz->esquerdo);
-
-
-        int alturaDireita = altura(raiz->direito);
-
-
-        if (alturaEsquerda > alturaDireita) {
-            return (alturaEsquerda + 1);
-        } else {
-            return (alturaDireita + 1);
-        }
-    }
-}
-int profundidadeNo(node* raiz, int valorBuscado) {
-    if (raiz == NULL) {
-        return -1;
-    }
-
-
-    if (raiz->dado == valorBuscado) {
-        return 0;
-    }
-
-
-    if (valorBuscado < raiz->dado) {
-        int profundidadeEsquerda = profundidadeNo(raiz->esquerdo, valorBuscado);
-        if (profundidadeEsquerda != -1) {
-            return profundidadeEsquerda + 1;
-        }
-    }
-    else {
-        int profundidadeDireita = profundidadeNo(raiz->direito, valorBuscado);
-        if (profundidadeDireita != -1) {
-            return profundidadeDireita + 1;
-        }
-    }
-
-
-    return -1;
-}
-   
-
-int somarValoresArvore(node* raiz) {
-    if (raiz == NULL) {
-        return 0;
-    } else {
-        return raiz->dado + somarValoresArvore(raiz->esquerdo) + somarValoresArvore(raiz->direito);
-    }
-}
-int contarNos(node* raiz) {
-    if (raiz == NULL) {
-        return 0;
-    } else {
-        return 1 + contarNos(raiz->esquerdo) + contarNos(raiz->direito);
-    }
-}
-
-int contarFolhas(node* raiz) {
-    if (raiz == NULL) {
-        return 0;
-    } else if (raiz->esquerdo == NULL && raiz->direito == NULL) {
-        return 1;
-    } else {
-        return contarFolhas(raiz->esquerdo) + contarFolhas(raiz->direito);
-    }
-}
 
 
 
 
 
-int main (){
 
 
 
- node* raiz = NULL;
-   raiz = inserir(raiz,30);
-    raiz = inserir(raiz,20);
-     raiz = inserir(raiz,40);
-      raiz = inserir(raiz,15);
-       raiz = inserir(raiz,25);
+int main() {
+    Aluno* arvoreAlunos = NULL;
 
-         int quantidade = contarFolhas(raiz);
-    printf("a quantidade de folhas na arvore é de : %d \n", quantidade);
-   
-
-        
-        
+    arvoreAlunos = inserirAluno(arvoreAlunos, "Joao Silva", 101, 7.5);
+    arvoreAlunos = inserirAluno(arvoreAlunos, "Maria Souza", 105, 9.0);
+    arvoreAlunos = inserirAluno(arvoreAlunos, "Carlos Lima", 103, 6.0);
+    arvoreAlunos = inserirAluno(arvoreAlunos, "Ana Paula", 100, 8.5);
+    arvoreAlunos = inserirAluno(arvoreAlunos, "Pedro Gomes", 102, 7.0);
+    arvoreAlunos = inserirAluno(arvoreAlunos, "Laura Santos", 104, 9.5);
+    arvoreAlunos = inserirAluno(arvoreAlunos, "Fernando Alves", 106, 5.0);
 
 
     return 0;
 }
-
-
-
 
 
 
