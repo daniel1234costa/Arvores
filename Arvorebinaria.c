@@ -38,6 +38,26 @@ Aluno* inserirAluno(Aluno* raiz, const char* nome, int matricula, float nota) {
     return raiz;
 }
 
+Aluno* buscarAlunoPorNome(Aluno* raiz, const char* nomeBuscado) {
+    if (raiz == NULL) {
+        return NULL;
+    }
+    if (strcmp(raiz->nome, nomeBuscado) == 0) {
+        return raiz;
+    }
+    Aluno* encontradoEsquerda = buscarAlunoPorNome(raiz->esquerdo, nomeBuscado);
+    if (encontradoEsquerda != NULL) {
+        return encontradoEsquerda;
+    }
+    Aluno* encontradoDireita = buscarAlunoPorNome(raiz->direito, nomeBuscado);
+    if (encontradoDireita != NULL) {
+        return encontradoDireita;
+    }
+    return NULL;
+}
+
+
+
 
 
 
