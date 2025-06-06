@@ -141,6 +141,27 @@ void posordem (node* raiz){
         }
        
     }
+    int altura(node* raiz){
+
+
+        if(raiz == NULL){
+            return -1;
+        }
+         else {
+        int alturaEsquerda = altura(raiz->esquerdo);
+
+
+        int alturaDireita = altura(raiz->direito);
+
+
+        if (alturaEsquerda > alturaDireita) {
+            return (alturaEsquerda + 1);
+        } else {
+            return (alturaDireita + 1);
+        }
+    }
+}
+
 
 
 int main (){
@@ -155,13 +176,19 @@ int main (){
        raiz = inserir(raiz,25);
 
 
-posordem(raiz);
 
 
-
-
-
-
-
+int alturaA = altura(raiz);
+printf("A altura da arvore é :  %d \n", alturaA);
     return 0;
 }
+
+
+
+
+
+
+
+
+    
+
