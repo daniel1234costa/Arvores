@@ -111,10 +111,32 @@ node* removerNo(node* raiz, int valor) {
                         return buscarno(raiz->direito, valor);
                     }
     }
+    void ordem(node* raiz){
+        if(raiz != NULL){
+        ordem(raiz->esquerdo);
+        printf("%d", raiz->dado);
+        ordem(raiz->direito);
+
+
+        }
+       
+    }
+
+
+
 int main (){
 
 
 
+ node* raiz = NULL;
+   raiz = inserir(raiz,30);
+    raiz = inserir(raiz,20);
+     raiz = inserir(raiz,40);
+      raiz = inserir(raiz,15);
+       raiz = inserir(raiz,25);
+
+
+ordem(raiz);
 
 
 
