@@ -197,6 +197,15 @@ int somarValoresArvore(node* raiz) {
         return raiz->dado + somarValoresArvore(raiz->esquerdo) + somarValoresArvore(raiz->direito);
     }
 }
+int contarNos(node* raiz) {
+    if (raiz == NULL) {
+        return 0;
+    } else {
+        return 1 + contarNos(raiz->esquerdo) + contarNos(raiz->direito);
+    }
+}
+
+
 
 
 
@@ -211,9 +220,10 @@ int main (){
       raiz = inserir(raiz,15);
        raiz = inserir(raiz,25);
 
-          int soma = somarValoresArvore(raiz);
-       printf("a soma dos valores da arvore é = %d", soma);
+        int quantidade = contarNos(raiz);
+    printf("a quantidade de nós na arvore é de : %d \n", quantidade);
    
+
 
         
 
