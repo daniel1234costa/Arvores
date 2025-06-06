@@ -205,6 +205,16 @@ int contarNos(node* raiz) {
     }
 }
 
+int contarFolhas(node* raiz) {
+    if (raiz == NULL) {
+        return 0;
+    } else if (raiz->esquerdo == NULL && raiz->direito == NULL) {
+        return 1;
+    } else {
+        return contarFolhas(raiz->esquerdo) + contarFolhas(raiz->direito);
+    }
+}
+
 
 
 
@@ -220,11 +230,11 @@ int main (){
       raiz = inserir(raiz,15);
        raiz = inserir(raiz,25);
 
-        int quantidade = contarNos(raiz);
-    printf("a quantidade de nós na arvore é de : %d \n", quantidade);
+         int quantidade = contarFolhas(raiz);
+    printf("a quantidade de folhas na arvore é de : %d \n", quantidade);
    
 
-
+        
         
 
 
