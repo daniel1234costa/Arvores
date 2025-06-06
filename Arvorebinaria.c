@@ -56,8 +56,32 @@ Aluno* buscarAlunoPorNome(Aluno* raiz, const char* nomeBuscado) {
     return NULL;
 }
 
+int contarAlunos(Aluno* raiz) {
+    if (raiz == NULL) {
+        return 0;
+    } else {
+        return 1 + contarAlunos(raiz->esquerdo) + contarAlunos(raiz->direito);
+    }
+}
 
 
+float somarNotasAlunos(Aluno* raiz) {
+    if (raiz == NULL) {
+        return 0.0f;
+    } else {
+        return raiz->nota + somarNotasAlunos(raiz->esquerdo) + somarNotasAlunos(raiz->direito);
+    }
+}
+
+float calcularMediaNotas(Aluno* raiz) {
+    float somaTotalNotas = somarNotasAlunos(raiz);
+    int totalAlunos = contarAlunos(raiz);
+    if (totalAlunos == 0) {
+        return 0.0f;
+    } else {
+        return somaTotalNotas / totalAlunos;
+    }
+}
 
 
 
