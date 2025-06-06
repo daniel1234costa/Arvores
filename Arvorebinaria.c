@@ -161,6 +161,35 @@ void posordem (node* raiz){
         }
     }
 }
+int profundidadeNo(node* raiz, int valorBuscado) {
+    if (raiz == NULL) {
+        return -1;
+    }
+
+
+    if (raiz->dado == valorBuscado) {
+        return 0;
+    }
+
+
+    if (valorBuscado < raiz->dado) {
+        int profundidadeEsquerda = profundidadeNo(raiz->esquerdo, valorBuscado);
+        if (profundidadeEsquerda != -1) {
+            return profundidadeEsquerda + 1;
+        }
+    }
+    else {
+        int profundidadeDireita = profundidadeNo(raiz->direito, valorBuscado);
+        if (profundidadeDireita != -1) {
+            return profundidadeDireita + 1;
+        }
+    }
+
+
+    return -1;
+}
+   
+
 
 
 
@@ -174,12 +203,17 @@ int main (){
      raiz = inserir(raiz,40);
       raiz = inserir(raiz,15);
        raiz = inserir(raiz,25);
+        int no;
+     printf("Informe o nó que voce deseja saber sua profundidade\n");
+     scanf("%d", &no);
+int profun = profundidadeNo(raiz, no);
+    printf("O no %d tem profundidade %d \n", no, profun);
 
 
 
 
-int alturaA = altura(raiz);
-printf("A altura da arvore é :  %d \n", alturaA);
+
+
     return 0;
 }
 
