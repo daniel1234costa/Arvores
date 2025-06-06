@@ -131,6 +131,16 @@ void preordem (node* raiz){
         }
        
     }
+void posordem (node* raiz){
+        if(raiz != NULL){
+        posordem(raiz->esquerdo);
+          posordem(raiz->direito);
+           printf("%d ", raiz->dado);
+
+
+        }
+       
+    }
 
 
 int main (){
@@ -145,7 +155,7 @@ int main (){
        raiz = inserir(raiz,25);
 
 
-preordem(raiz);
+posordem(raiz);
 
 
 
